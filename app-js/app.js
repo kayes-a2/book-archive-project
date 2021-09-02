@@ -17,7 +17,7 @@ const button = () => {
 
   // error massage function (start)
   if (search === '') {
-    error.classList.add("p-2")
+    // error.classList.add("p-2")
     error.innerText = 'Search field can not be empty !!';
     return;
   }
