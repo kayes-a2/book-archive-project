@@ -1,48 +1,55 @@
-// add event handeler by anonymous function
+// global (scope)variable (start)
 const error = document.getElementById('error-message');
 const searchInput = document.getElementById('inputField');
-const container = document.getElementById('container')
+const container = document.getElementById('container');
 
 
 
-document.getElementById('button').addEventListener('click', function () {
+// add event handeler by anonymous function (start)
+const button = () => {
   const search = searchInput.value;
+
   // clear search inputfield
   searchInput.value = '';
 
+  // clear container 
   container.textContent = "";
+
+  // error massage function (start)
   if (search === '') {
     error.classList.add("p-2")
-    error.innerText = 'Search field can not be empty';
-    return
+    error.innerText = 'Search field can not be empty !!';
+    return;
   }
 
-
-  // api link (load data) of book archive  
+  // api link of book archive  
   const url = (`https://openlibrary.org/search.json?q=${search}`)
 
-
-  // get api data by fetch
+  // load data
   fetch(url)
     .then(res => res.json())
     .then(data => showData(data.docs))
 
+  // clear search value
   search.value = "";
+}
 
-})
 
-//show api data with arrow function
+
+//show data 
 const showData = data => {
 
   // clear previous search value
   container.textContent = "";
   error.innerText = "";
 
+  // error massage function (start)
   if (data.length === 0) {
-    error.innerText = 'Book not found';
+    error.innerText = 'Sorry book not found -_-';
     return;
   }
 
+  // show data in ui
   data.forEach(item => {
     const div = document.createElement('div');
     div.classList.add('col');
@@ -52,10 +59,12 @@ const showData = data => {
               <img  src=https://covers.openlibrary.org/b/id/${item.cover_i}-M.jpg class="card-img-top" alt="...">
             </div>
                   <div class="card-body">
-                      <h5 class="card-title">Book Name:<span class='danger'>  ${item.title}</span></h5>
-                      <h5 class="card-title">Author Name: ${item.author_name}</h5>
-                      <h5 class="card-title">Publisher: ${item.publisher}</h5>
-                      <h5 class="card-title">First Published Year: ${item.first_publish_year}</h5>
+                      <h5 class="card-title">Book Name: <span class="text-success"> 
+                      ${item.title}</span></h5>
+                      <h5 class="card-title">Author Name: <span class="text-info"> 
+                      ${item.author_name} </span></h5>
+                      <h5 class="card-title">Publisher: <span class="text-secondary"> ${item.publisher}</span></h5>
+                      <h5 class="card-title">First Published Year:<span class="text-primary"> ${item.first_publish_year} </span></h5>
                   </div>
           </div>
     `;
